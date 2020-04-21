@@ -14,9 +14,9 @@ services:
     networks:
       - 'dev'
     volumes:
-      - 'gitlab_config:/etc/gitlab'
-      - 'gitlab_logs:/var/log/gitlab'
-      - 'gitlab_data:/var/opt/gitlab'
+      - './gitlab/config:/etc/gitlab'
+      - './gitlab/logs:/var/log/gitlab'
+      - './gitlab/data:/var/opt/gitlab'
     sonarqube:
     image: 'sonarqube:7.6-community'
     ports:
@@ -24,17 +24,6 @@ services:
     networks:
       - 'dev'
     volumes:
-      - 'sonarqube_conf:/opt/sonarqube/conf'
-      - 'sonarqube_data:/opt/sonarqube/data'
-      - 'sonarqube_logs:/opt/sonarqube/logs'
-      - 'sonarqube_extensions:/opt/sonarqube/extensions'
+      - './sonarqube/:/opt/sonarqube/'
 networks:
   dev:
-volumes:
-  gitlab_data:
-  gitlab_logs:
-  gitlab_config:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_logs:
-  sonarqube_extensions:
