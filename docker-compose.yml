@@ -1,29 +1,26 @@
 version: '3.0'
 services:
-    web:
-    image: 'gitlab/gitlab-ce:latest'
-    restart: always
-    hostname: 'gitlab'
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://localhost:80'
-    ports:
-      - '80:80'
-      - '443:443'
-      - '22:22'
-    networks:
-      - 'dev'
-    volumes:
-      - './gitlab/config:/etc/gitlab'
-      - './gitlab/logs:/var/log/gitlab'
-      - './gitlab/data:/var/opt/gitlab'
+    gitlab:
+        image: 'gitlab/gitlab-ce:latest'
+        ports:
+          - '80:80'
+          - '443:443'
+        networks:
+          - 'dev'
+        volumes:
+          - './gitlab/config:/etc/gitlab'
+          - './gitlab/logs:/var/log/gitlab'
+          - './gitlab/data:/var/opt/gitlab'
     sonarqube:
-    image: 'sonarqube:7.6-community'
-    ports:
-      - '9000:9000'
-    networks:
-      - 'dev'
-    volumes:
-      - './sonarqube/:/opt/sonarqube/'
+        image: 'sonarqube:latest'
+        #image: 'sonarqube:7.6-community'
+        ports:
+          - '9000:9000'
+        networks:
+          - 'dev'
+        volumes:
+          - './sonarqube/data:/opt/sonarqube/data'
+          - './sonarqube/conf:/opt/sonarqube/conf'
+          - './sonarqube/extensions:/opt/sonarqube/extensions'
 networks:
   dev:
