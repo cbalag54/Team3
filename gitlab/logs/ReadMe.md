@@ -1,1 +1,0 @@
-Gitlab resource directory

@@ -1,1 +1,0 @@
-Sonarqube resource directory
