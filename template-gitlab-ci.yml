@@ -1,0 +1,20 @@
+image:
+  name: sonarsource/sonar-scanner-cli:latest
+  entrypoint: [""]
+variables:
+  SONAR_TOKEN: "<SONAR-TOKEN>"
+  SONAR_HOST_URL: "<SONARQUBE SERVER URL>"
+  SONAR_PROJECT_KEY: "<SONAR PROJECT KEY>"
+  GIT_DEPTH: 0
+sonarqube-check:
+  stage: test
+  before_script:
+   - npm install typescript
+  script:
+    - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.sources=./ -Dsonar.exclusions="**/*.jpg" -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dsonar.gitlab.project_id=$CI_PROJECT_ID
+  allow_failure: true
+  only:
+    - merge_requests
+    - master
+  tags:
+    - shell
