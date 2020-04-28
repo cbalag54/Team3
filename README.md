@@ -79,7 +79,7 @@ Gitlab+Sonarqube installation and execution
      - <SONARQUBE SERVER URL> with the Sonarqube server url- Example - http://10.103.158.156:9000
      - <SONAR PROJECT KEY> with your Sonarqube project key created on a previous step.
  - Here you have the template-gitlab-ci.yml file contents, just in case:
-
+<code>
 image:
   name: sonarsource/sonar-scanner-cli:latest
   entrypoint: [""]
@@ -98,7 +98,7 @@ sonarqube-check:
     - master
   tags:
     - shell
-
+</code>
  - SSH to your VM/System
  - Download the Juice-Shop source code from https://github.com/bkimminich/juice-shop
     - wget https://github.com/bkimminich/juice-shop/archive/master.zip 
