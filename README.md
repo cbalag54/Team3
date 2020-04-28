@@ -2,7 +2,7 @@
 
 Gitlab+Sonarqube installation and execution
 
-Requirements:
+## Requirements:
  - Gitlab running using docker-compose
  - Sonarqube running using docker-compose
  - Access to the VM or Baremetal system (Laptop or WK) IP address. Note this IP you will use it for configuration purposes.
@@ -10,18 +10,18 @@ Requirements:
  - Sonarqube requires NodeJS for the scans, but since we are using a container NodeJS will NOT need to be installed on your system.
  - docker-compose needs to be installed
 
-Additional Information:
+## Additional Information:
  - Gitlab ports are published at 80:80, 443:443 & 22:22
  - SonarQube port is published at 9000:9000
 
  - Sonarqube default login:
     - admin:admin
 
-Data Location:
+## Data Location:
  - All docker volumes are in default location: /var/lib/docker/volumes/
    NOTE: under each volume directory there is a _data directory which is where the actual data resides.
 
-Start the stack:
+## Start the stack:
  - Navigate to the root directory of the repository
  - Run 'sudo docker-compose up -d'
  - For viewing services logs execute the following
@@ -31,21 +31,21 @@ Start the stack:
     - Gitlab http://<IP of your server>:80
     - Sonarqube http://<IP of your server>:9000
 
-Sonarqube Plugin setup:
+## Sonarqube Plugin setup:
  - When all the services are up and running copy the sonarqube gitlab plugin to /var/lib/docker/volumes/team3_sonarqube_extensions/_data/plugins
    if the plugin directory does not exists then create it. 
     - cp ./sonarqube-plugins/* /var/lib/docker/volumes/team3_sonarqube_extensions/_data/plugins
  - Restart Sonarqube:
     - Wait for sonarqube to come up, log in, go to Administration->System->Click Restart Server
 
-Configure Sonarqube Project:
+## Configure Sonarqube Project:
  - Go to the Plus (+) sign on the top right -> new Project
  - Provide a project key, I like to not use spaces, copy this key and add it to your notes
  - Add a display name
  - On the following page click generate token and copy the token to your notes, we will use it later.
  - Done with the setup
 
-Configure Sonarqube Gitlab plugin:
+## Configure Sonarqube Gitlab plugin:
  - Go to Administration->Configuration->General Settings->Gitlab
  - Add your gitlab url under 'URL to access GitLab.' Example - http://10.103.158.156/
  - Add your Gitlab User Token, to get your Gitlab User Token you need to go back to the Gitlab server.
@@ -54,7 +54,7 @@ Configure Sonarqube Gitlab plugin:
  - Now that you have the access token, go back to sonarqube and finish the Gitlab setup by submitting the token and clicking save.
  - Done configuring Sonarqube
 
-Configure the Shared Gitlab-runner:
+## Configure the Shared Gitlab-runner:
  - The Gitlab-runner on a high level will execute a docker command to run a sonar-scaner container to perform the sonarqube scan for every
    commit based on our soon to be configured Gitlab CI pipeline.
  - Make sure you installed gitlab-runner
@@ -68,7 +68,7 @@ Configure the Shared Gitlab-runner:
  - The tag 'shell' is used to make sure the runner only works on pipelines that includes such tag.
  - The runner is registered as a shared runner which means that as long as the pipeline for a repository includes the the 'shell' tag then the runner will execute it.
 
-Perform the Part2 exercise:
+## Perform the Part2 exercise:
  - Create a new repository on Gitlab
  - When you are done creating the repo add a new file over the UI by clicking 'New File'
  - Name the file '.gitlab-ci.yml' make sure you have the dot(.) in front of it to make it hidden.
