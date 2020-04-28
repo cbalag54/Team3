@@ -1,26 +1,42 @@
 version: '3.0'
 services:
     gitlab:
-        image: 'gitlab/gitlab-ce:latest'
-        ports:
-          - '80:80'
-          - '443:443'
-        networks:
-          - 'dev'
-        volumes:
-          - './gitlab/config:/etc/gitlab'
-          - './gitlab/logs:/var/log/gitlab'
-          - './gitlab/data:/var/opt/gitlab'
+      image: 'gitlab/gitlab-ce:latest'
+      restart: unless-stopped
+      tty: true
+      ports:
+        - '80:80'
+        - '443:443'
+        - '2222:22'
+      volumes:
+        - 'gitlab_config:/etc/gitlab'
+        - 'gitlab_logs:/var/log/gitlab'
+        - 'gitlab_data:/var/opt/gitlab'
+      networks:
+        - final-project-network
     sonarqube:
-        image: 'sonarqube:latest'
-        #image: 'sonarqube:7.6-community'
-        ports:
-          - '9000:9000'
-        networks:
-          - 'dev'
-        volumes:
-          - './sonarqube/data:/opt/sonarqube/data'
-          - './sonarqube/conf:/opt/sonarqube/conf'
-          - './sonarqube/extensions:/opt/sonarqube/extensions'
+      image: 'sonarqube:7.6-community'
+      restart: unless-stopped
+      tty: true
+      ports:
+        - '9000:9000'
+      volumes:
+        - 'sonarqube_conf:/opt/sonarqube/conf'
+        - 'sonarqube_data:/opt/sonarqube/data'
+        - 'sonarqube_logs:/opt/sonarqube/logs'
+        - 'sonarqube_extensions:/opt/sonarqube/extensions'
+      networks:
+        - final-project-network
 networks:
-  dev:
+  final-project-network:
+    driver: bridge
+
+volumes:
+  gitlab_data:
+  gitlab_logs:
+  gitlab_config:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+
